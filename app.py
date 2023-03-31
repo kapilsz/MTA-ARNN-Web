@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session, send_file
 import pandas as pd
 # import tensorflow as tf
 import plotly.graph_objs as go
@@ -20,19 +20,9 @@ from Criteo.arnn_tf_function import *
 from Criteo.arnn_function import *
 
 app = Flask(__name__)
+app.secret_key = 'kapil_shyam_zadpe_21IM60R16_IITKgp23'
 
 medicine_type = 'Product1'
-
-df = pd.DataFrame()
-df['Channel'] = ['Facebook', 'Google','IG','MAIL','TV']
-df['Score'] = [0.8, 0.6, 0.4, 0.2, 0.1]
-df['Cost'] = [100, 200, 300, 400, 500]
-df.to_csv('data.csv',index=False)
-
-layout = Layout(
-    paper_bgcolor='rgba(0,0,0,0)',
-    plot_bgcolor='rgba(0,0,0,0)'
-)
 
 def check_userpass(username, password):
     # Connect to the SQLite database
@@ -52,27 +42,12 @@ def check_userpass(username, password):
 
 
 def process_file(file=None):
-    # Read CSV file into a Pandas dataframe
-    # df = pd.read_csv(file)
 
-    # TODO: Process the dataframe using TensorFlow model to calculate attribution
-    print(2)
     X, y, key_ids, costs = data_preprocess_criteo(file)
-    print(3)
-    # Load the TensorFlow model
     model_attn = tf.keras.models.load_model('Model/model_attn_weights_c.h5', custom_objects={'CustomAttention':CustomAttention,'XMI_lay':XMI_lay})
-    print(4)
-    # Make predictions using the model
     predictions = attribution_criteo(X, y, costs, model_attn)
-    print(5)
     predictions.to_csv('prediction.csv',index=False)
-    print(6)
-    # For now, just return the original dataframe with three additional columns
-    df = pd.DataFrame()
-    df['Channel'] = ['Facebook', 'Google','IG','MAIL','TV']
-    df['Score'] = [0.8, 0.6, 0.4, 0.2, 0.1]
-    df['Cost'] = [100, 200, 300, 400, 500]
-    return df
+    return True
 
 def create_graph(df):
     # Create a Plotly graph
@@ -91,15 +66,25 @@ def login():
         password = request.form['password']
         usercheck = check_userpass(username,password)
         if usercheck:
+            session['username'] = username
             return redirect(url_for('home'))
         else:
             error = 'Please Check Your Credentials'
             return render_template('login.html', error=error)
     return render_template('login.html', error=None)
 
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
+
+
 @app.route('/home', methods=['GET', 'POST'])
 def home():
-    if request.method == 'POST':
+    if 'username' not in session:
+        return redirect(url_for('login'))
+
+    elif request.method == 'POST':
         global medicine_type
         medicine_type = request.form['medicine_type']
         start_date = request.form['start_date']
@@ -114,7 +99,6 @@ def home():
         sampled_data = pd.read_sql(query,conn)
         conn.close()
         if sampled_data.shape[0] > 9:
-            print(1)
             df = process_file(sampled_data)
             return redirect(url_for('attr_table'))
         else:
@@ -130,6 +114,8 @@ def requestt():
 
 @app.route('/attr_table')
 def attr_table():
+    if 'username' not in session:
+        return redirect(url_for('login'))
     # Read CSV file into a Pandas dataframe
     df = pd.read_csv('prediction.csv')
     df = df[df.frequency>1].iloc[:15]
@@ -139,8 +125,8 @@ def attr_table():
 
 @app.route('/bar_chart')
 def bar_chart():
-    # Read CSV file into a Pandas dataframe
-    df = pd.read_csv('data.csv')
+    if 'username' not in session:
+        return redirect(url_for('login'))
     df = pd.read_csv('prediction.csv')
     df = df[df.frequency>1].iloc[:15]
 
@@ -155,8 +141,8 @@ def bar_chart():
 
 @app.route('/pie_chart')
 def pie_chart():
-    # Read CSV file into a Pandas dataframe
-    df = pd.read_csv('data.csv')
+    if 'username' not in session:
+        return redirect(url_for('login'))
     df = pd.read_csv('prediction.csv')
     df = df[df.frequency>1].iloc[:15]
 
@@ -170,8 +156,8 @@ def pie_chart():
 
 @app.route('/heatmap')
 def heatmap():
-    # Read CSV file into a Pandas dataframe
-    df = pd.read_csv('data.csv')
+    if 'username' not in session:
+        return redirect(url_for('login'))
     df = pd.read_csv('prediction.csv')
     df = df[df.frequency>1].iloc[:15]
 
@@ -183,12 +169,10 @@ def heatmap():
 
     return render_template('heatmap.html', chart=chart, medicine_type=medicine_type)
 
-from flask import send_file
-
 @app.route('/download')
 def download_file():
     # Get the path to the file you want to download
-    file_path = 'data.csv'
+    file_path = 'prediction.csv'
     # Return the file for download using the send_file() function
     return send_file(file_path, as_attachment=True)
 
@@ -201,37 +185,3 @@ def download_graph(graph_name):
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)
-
-
-# import sys
-# import tensorflow as tf
-# import pickle 
-# from Criteo.arnn_config import config1
-# # load it
-# with open(f'config_class_arnn_criteo.pickle', 'rb') as file2:
-#     Config = pickle.load(file2)
-
-# from Criteo.arnn_tf_function import *
-# from Criteo.arnn_function import *
-
-# # sys.path.insert(0, 'C:/Users/hp/Downloads/MTP/web_app/Criteo')
-
-
-# if file is not None:
-#     # Load the CSV file into a pandas dataframe
-#     data = pd.read_csv(file)
-
-#     # Preprocess the data for the TensorFlow model
-#     # ...
-#     X, y, key_ids = data_preprocess_criteo(data)
-
-#     # Load the TensorFlow model
-#     model_attn = tf.keras.models.load_model('Model/model_attn_weights_c.h5', custom_objects={'CustomAttention':CustomAttention,'XMI_lay':XMI_lay})
-
-#     # Make predictions using the model
-#     predictions = attribution_criteo(X, y, model_attn)
-#     predictions.sort_values(by=['mean_weight'],ascending=False,inplace=True)
-#     # Display the attribution results in a table
-#     st.write("Attribution Results:")
-#     # attribution_df = pd.DataFrame(predictions, columns=["Channel 1", "Channel 2", "Channel 3", "Channel 4"])
-#     st.dataframe(predictions)#.iloc[:20])

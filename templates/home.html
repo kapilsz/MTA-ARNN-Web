@@ -30,7 +30,8 @@
             <button {% if request.path == '/bar_chart' %}class="active"{% endif %} onclick="alert('PLease Configure the data first')">Bar Chart</button>
             <button {% if request.path == '/pie_chart' %}class="active"{% endif %} onclick="alert('PLease Configure the data first')">Pie Chart</button>
             <button {% if request.path == '/heatmap' %}class="active"{% endif %} onclick="alert('PLease Configure the data first')">Heatmap</button>
-            <button name="logout" {% if request.path == '/login' %}class="active"{% endif %} onclick="confirmLogout()"style="float: right;">LogOut</button>
+            <!-- <button name="logout" {% if request.path == '/login' %}class="active"{% endif %} onclick="confirmLogout()"style="float: right;">LogOut</button> -->
+            <button class="logout" onclick="confirmLogout()" style="float: right;">LogOut</button>
         </nav>
         <div class="error_1">
             {% if error %}
