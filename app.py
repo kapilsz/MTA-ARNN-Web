@@ -82,7 +82,9 @@ def logout():
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     if 'username' not in session:
-        return redirect(url_for('login'))
+        error = 'Session expired, Please Login again!'
+        return render_template('login.html', error=error)
+        # return redirect(url_for('login'))
 
     elif request.method == 'POST':
         global medicine_type
@@ -115,7 +117,9 @@ def requestt():
 @app.route('/attr_table')
 def attr_table():
     if 'username' not in session:
-        return redirect(url_for('login'))
+        error = 'Session expired, Please Login again!'
+        return render_template('login.html', error=error)
+        # return redirect(url_for('login'))
     # Read CSV file into a Pandas dataframe
     df = pd.read_csv('prediction.csv')
     df = df[df.frequency>1].iloc[:15]
@@ -126,7 +130,9 @@ def attr_table():
 @app.route('/bar_chart')
 def bar_chart():
     if 'username' not in session:
-        return redirect(url_for('login'))
+        error = 'Session expired, Please Login again!'
+        return render_template('login.html', error=error)
+        # return redirect(url_for('login'))
     df = pd.read_csv('prediction.csv')
     df = df[df.frequency>1].iloc[:15]
 
@@ -142,7 +148,9 @@ def bar_chart():
 @app.route('/pie_chart')
 def pie_chart():
     if 'username' not in session:
-        return redirect(url_for('login'))
+        error = 'Session expired, Please Login again!'
+        return render_template('login.html', error=error)
+        # return redirect(url_for('login'))
     df = pd.read_csv('prediction.csv')
     df = df[df.frequency>1].iloc[:15]
 
@@ -157,7 +165,9 @@ def pie_chart():
 @app.route('/heatmap')
 def heatmap():
     if 'username' not in session:
-        return redirect(url_for('login'))
+        error = 'Session expired, Please Login again!'
+        return render_template('login.html', error=error)
+        # return redirect(url_for('login'))
     df = pd.read_csv('prediction.csv')
     df = df[df.frequency>1].iloc[:15]
 
@@ -180,7 +190,6 @@ def download_file():
 def download_graph(graph_name):
     graph_path = os.path.join(app.root_path, 'static', graph_name)
     return send_file(graph_path, as_attachment=True)
-
 
 
 if __name__ == '__main__':
