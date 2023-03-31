@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" >
+  <head>
+    <meta charset="UTF-8">
+    <title>Login Page with Background Image Example</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}" />    
+    <script src="../static/login.js"></script>
+  </head>
+
+  <body>
+    <div class="header">
+      <div class="greeting">
+        <p>Welcome back!</p>
+      </div>
+      <div class="request-access">
+        <button onclick="redirectToRequestPage()">Request Access</button>
+      </div>
+    </div>
+    <div>
+      <form action="/" method="POST", enctype="multipart/form-data">
+        <div class="kgp-logo">
+          <img src="../static/img/kgp_logo.png" alt="logo for iit kgp">
+        </div>
+        <div class="form-field">
+          <input type="username" placeholder="Email / Username" required autocomplete="off" name="username"/>
+        </div>
+        
+        <div class="form-field">
+          <input type="password" placeholder="Password" required autocomplete="off" name="password"/>
+        </div>
+        
+        <div class="form-field">
+          <button class="btn" type="submit">Log in</button>
+        </div>
+        <div class="error_1">
+          {% if error %}
+          <p><strong class="error_place">Error:</strong> {{ error }}</p>
+          {% endif %}
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

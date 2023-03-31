@@ -1,0 +1,243 @@
+@import url("https://fonts.googleapis.com/css?family=Lato:400,700");
+#bg {
+  background-image: url('bg3.jpg');
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  color: #4A4A4A;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  background-image: url('bg3.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+form {
+  margin-top: 100px;
+  width: 350px;
+  position: relative;
+  background-color: rgba(221, 216, 167, 0.616);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+form .form-field::before {
+  font-size: 20px;
+  position: absolute;
+  left: 15px;
+  top: 17px;
+  color: #888888;
+  content: " ";
+  display: block;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+form .form-field:nth-child(2)::before {
+  background-image: url(img/user-icon.png);
+  width: 20px;
+  height: 20px;
+  top: 15px;
+}
+form .form-field:nth-child(3)::before {
+  background-image: url(img/lock-icon.png);
+  width: 16px;
+  height: 16px;
+}
+form .form-field {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-bottom: 1rem;
+  position: relative;
+}
+form input {
+  font-family: inherit;
+  width: 100%;
+  outline: none;
+  background-color: #fff;
+  border-radius: 4px;
+  border: none;
+  display: block;
+  padding: 0.9rem 0.7rem;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+  font-size: 17px;
+  color: #4A4A4A;
+  text-indent: 40px;
+}
+form .btn {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  margin: 0 auto;
+  padding: 0.9rem 2.5rem;
+  text-align: center;
+  background-color: #47AB11;
+  color: #fff;
+  border-radius: 4px;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+  font-size: 17px;
+}
+form .kgp-logo {
+  outline: none;
+  border: none;
+  margin: 0 auto;
+  padding: 0.9rem 2.5rem;
+  text-align: center;
+}
+
+
+
+
+
+/* Style the header strip */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #f0f0f0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  height: 30px;
+  /* background-image: url('../static/bg1.jpeg'); */
+  background-color: rgba(25, 134, 101, 0.5);
+  margin: 10px;border-radius: 6px;
+}
+
+/* Style the greeting */
+.greeting {
+  font-size: 20px;
+  margin: 0;
+  color: white;
+}
+
+.request-access button {
+  background-color: #007bff;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.request-access button:hover {
+  background-color: #0069d9;
+}
+
+.request-access button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+}
+
+
+/* Style the request access button */
+header button {
+font-size: 16px;
+margin: 0;
+color: red;
+text-align: center;
+}
+
+/* Style the access request form */
+.access-request-form {
+  background-color: #f2f2f25d;
+  border: 1px solid #cccccc1f;
+  padding: 20px;
+  max-width: 500px;
+  margin: 20px auto;
+  position: relative;
+  /* margin-top:100px; */
+}
+
+
+/* Style the form fields */
+label {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  /* margin-bottom: 20px; */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+button[type="submit"],
+button[type="button"] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+button[type="submit"]:hover,
+button[type="button"]:hover {
+  background-color: #45a049;
+}
+
+
+.access-request-message {
+  padding: 20px;
+  background-color: #528b8b5d;
+  margin: 20px;
+  align-self: center;
+  margin-top: 100px;
+  border-radius: 10px;
+}
+
+.access-request-message p {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.access-request-message button {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
+  /* margin-top: 20px; */
+  display: block;
+  margin: 0 auto;
+}
+
+
+.error_place{
+  color: red;
+  height: 10px;
+
+}
+.error_1{
+  color: rgba(187, 61, 61, 0.89);
+  height: 10px;
+  margin: 0 auto;
+  align-self: center;   
+}

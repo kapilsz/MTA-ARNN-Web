@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Attribution - Bar Chart</title>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script src="../static/home.js"></script>
+        <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+    </head>
+    
+    <body>
+        <nav>
+            <button {% if request.path == '/home' %}class="active"{% endif %} onclick="confirmNavigation()">Home</button>
+            <a href="/attr_table" {% if request.path == '/attr_table' %}class="active"{% endif %}>Attribution</a>
+            <a href="/bar_chart" {% if request.path == '/bar_chart' %}class="active"{% endif %}>Bar Chart</a>
+            <a href="/pie_chart" {% if request.path == '/pie_chart' %}class="active"{% endif %}>Pie Chart</a>
+            <a href="/heatmap" {% if request.path == '/heatmap' %}class="active"{% endif %}>Heatmap</a>
+            <a href="{{ url_for('download_graph', graph_name='bar_chart.png') }}" download="bar_chart.png" style="float: right;">Download</a>
+        </nav>
+        <h1>Attribution for {{medicine_type}}</h1>
+        <div id="chart">{{ chart|safe }}</div>
+    </body>
+</html>

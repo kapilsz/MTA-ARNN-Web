@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Multi-Attribution Model</title>
+	<style>
+		.container {
+			max-width: 600px;
+			margin: auto;
+			padding: 10px;
+			background-color: #f2f2f2;
+		}
+		h2 {
+			text-align: center;
+			margin-bottom: 20px;
+		}
+		label {
+			display: block;
+			margin-bottom: 10px;
+		}
+		select {
+			width: 100%;
+			padding: 12px 20px;
+			margin: 8px 0;
+			box-sizing: border-box;
+			border: 2px solid #ccc;
+			border-radius: 4px;
+			background-color: #f8f8f8;
+			font-size: 16px;
+			font-weight: normal;
+			appearance: none;
+			-moz-appearance: none;
+			-webkit-appearance: none;
+		}
+		button[type=submit] {
+			background-color: #4CAF50;
+			color: white;
+			padding: 12px 20px;
+			margin-top: 20px;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			width: 100%;
+			font-size: 16px;
+			font-weight: bold;
+		}
+		button[type=submit]:hover {
+			background-color: #45a049;
+		}
+
+        .form-group{
+            border: 2px solid rgba(0,0,0,0.2);
+            padding: 10px;
+            border-radius: 10px;
+            background-color: rgba(255,255,255,0.5);
+        }
+
+        .form-group label {
+        display: inline-block;
+        margin-right: 1em;
+        }
+
+        .form-group input[type="date"] {
+        display: inline-block;
+        width: auto;
+        margin-right: 1em;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .checkbox-group div {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .checkbox-group label {
+            margin-left: 5px;
+            
+        }
+        .checkbox-group-horizontal {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            border: 2px solid rgba(0,0,0,0.2);
+            padding: 10px;
+            border-radius: 10px;
+            background-color: rgba(255,255,255,0.5);
+            
+        }
+
+        .checkbox-group-horizontal div {
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-group-horizontal label {
+            margin-right: 10px;
+        }
+
+        .user-type-section {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        border: 2px solid rgba(0,0,0,0.2);
+        padding: 10px;
+        border-radius: 10px;
+        background-color: rgba(255,255,255,0.5);
+        }
+
+        .user-type-column {
+        flex: 1;
+        }
+
+        .user-type-column label {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+        }
+
+        .user-type-column label .checkmark {
+        display: inline-block;
+        width: 15px;
+        height: 15px;
+        border: 1px solid #ccc;
+        margin-right: 5px;
+        }
+
+        .user-type-column label .user-type-name {
+        display: inline-block;
+        margin-right: 10px;
+        }
+
+        .input-group {
+            border-radius: 5px;
+            border: 2px solid rgba(0,0,0,0.2);
+            padding: 10px;
+            border-radius: 10px;
+            background-color: rgba(255,255,255,0.5);
+        }
+        label[for="time_period"] {
+        font-weight: bold;
+        }
+        label[for="medicine_type"] {
+        font-weight: bold;
+        margin-bottom: 5px;
+        }
+        label[for="user_type"] {
+        margin-top: 5px;
+        font-weight: bold;
+        }
+        label[for="region"] {
+        margin-top: 5px;
+        font-weight: bold;
+        }
+        .input-group-addon {
+        font-weight: bold;
+        }
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h2>Select Data for Multi-Attribution Model</h2>
+		<form action="/process_data" method="POST">
+			<label for="medicine_type">Medicine Type:</label>
+                <select id="medicine_type" name="medicine_type" size="1px">
+                    <option value="Trulicity">Trulicity</option>
+                    <option value="Verzenio">Verzenio</option>
+                    <option value="Talts">Talts</option>
+                    <option value="Jardiance">Jardiance</option>
+                </select>
+			<label for="time_period">Time Period:</label>
+                <div class="form-group">
+                    <label for="start_date">Start Date:</label>
+                    <input type="date" id="start_date" name="start_date" class="form-control" required>
+                
+                    <label for="end_date">End Date:</label>
+                    <input type="date" id="end_date" name="end_date" class="form-control" required>
+                </div>
+			<label for="region">Select Region:</label>
+                <div class="checkbox-group-horizontal">
+                    <div>
+                        <label>
+                            <input type="checkbox" name="region" value="North">
+                            <span class="north">North</span>
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            <input type="checkbox" name="region" value="East">
+                            <span class="west">East</span>
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            <input type="checkbox" name="region" value="West">
+                            <span class="west">West</span>
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            <input type="checkbox" name="region" value="South">
+                            <span class="south">South</span>
+                        </label>
+                    </div>
+                </div>
+
+            <label for="user_type">Select User Type:</label>
+                <div class="user-type-section">
+                    <div class="user-type-column">
+                    <label>
+                        <input type="checkbox" name="user_type" value="new_user">
+                        <span class="user-type-name">New User</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="user_type" value="high_spender">
+                        <span class="user-type-name">High Spender</span>
+                    </label>
+                    </div>
+                    <div class="user-type-column">
+                    <label>
+                        <input type="checkbox" name="user_type" value="returning_user">
+                        <span class="user-type-name">Returning User</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="user_type" value="regular_user">
+                        <span class="user-type-name">Regular User</span>
+                    </label>
+                    </div>
+                </div>
+            
+                <div class="input-group">
+                    <span class="input-group-addon">Sample Size:</span>
+                    <input type="number" id="sample_size" name="sample_size" class="form-control" placeholder="Enter sample size" onchange="formatNumber(this)">
+                </div>
+                  
+            
+			<button type="submit">Submit</button>
+		</form>
+	</div>
+</body>
+
+</html>

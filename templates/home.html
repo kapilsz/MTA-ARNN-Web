@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Attribution Calculator</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+        <script src="../static/home.js"></script>
+        <!-- Add icon library -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            .buttonload {
+            background-color: #04AA6D; /* Green background */
+            border: none; /* Remove borders */
+            color: white; /* White text */
+            padding: 12px 16px; /* Some padding */
+            font-size: 16px /* Set a font size */
+            }
+        </style>
+        <script>
+            function validate2() {
+                document.querySelector('.buttonload').style.display = 'block';
+                document.querySelector('.submitb').style.display = 'none';
+                }
+        </script>
+    </head>
+    
+    <body>
+        <nav>
+            <button {% if request.path == '/home' %}class="active"{% endif %} onclick="alert('Please Configure the data first')">Home</button>
+            <button {% if request.path == '/attr_table' %}class="active"{% endif %} onclick="alert('PLease Configure the data first')">Attribution</button>
+            <button {% if request.path == '/bar_chart' %}class="active"{% endif %} onclick="alert('PLease Configure the data first')">Bar Chart</button>
+            <button {% if request.path == '/pie_chart' %}class="active"{% endif %} onclick="alert('PLease Configure the data first')">Pie Chart</button>
+            <button {% if request.path == '/heatmap' %}class="active"{% endif %} onclick="alert('PLease Configure the data first')">Heatmap</button>
+            <button name="logout" {% if request.path == '/login' %}class="active"{% endif %} onclick="confirmLogout()"style="float: right;">LogOut</button>
+        </nav>
+        <div class="error_1">
+            {% if error %}
+            <p><strong class="error_place">Error:</strong> {{ error }}</p>
+            {% endif %}
+        </div>
+
+        <div class="container">
+            <h2>Select Data for Multi-Attribution Model</h2>
+            <div class="loader" id="loader"></div>
+            <form action="/home" method="POST" name="my-form-data-select" enctype="multipart/form-data">
+                <label for="medicine_type">Medicine Type:</label>
+                    <select id="medicine_type" name="medicine_type" size="1px">
+                        <option value="Product1">Product1</option>
+                        <option value="Product2">Product2</option>
+                        <option value="Product3">Product3</option>
+                        <option value="Product4">Product4</option>
+                    </select>
+                <label for="time_period">Time Period:</label>
+                    <div class="form-group">
+                        <label for="start_date">Start Date:</label>
+                        <input type="date" id="start_date" name="start_date" class="form-control" required>
+                        <label for="end_date">End Date:</label>
+                        <input type="date" id="end_date" name="end_date" class="form-control" required>
+                    </div>
+                <label for="region">Select Region:</label>
+                    <div class="checkbox-group-horizontal">
+                        <div>
+                            <label>
+                                <input type="checkbox" name="region" value="North">
+                                <span class="north">North</span>
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="checkbox" name="region" value="East">
+                                <span class="west">East</span>
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="checkbox" name="region" value="West">
+                                <span class="west">West</span>
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="checkbox" name="region" value="South">
+                                <span class="south">South</span>
+                            </label>
+                        </div>
+                    </div>
+                <label for="user_type">Select User Type:</label>
+                    <div class="user-type-section">
+                        <div class="user-type-column">
+                        <label>
+                            <input type="checkbox" name="user_type" value="new_user">
+                            <span class="user-type-name">New User</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" name="user_type" value="high_spender">
+                            <span class="user-type-name">High Spender</span>
+                        </label>
+                        </div>
+                        <div class="user-type-column">
+                        <label>
+                            <input type="checkbox" name="user_type" value="returning_user">
+                            <span class="user-type-name">Returning User</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" name="user_type" value="regular_user">
+                            <span class="user-type-name">Regular User</span>
+                        </label>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">Sample Size:</span>
+                        <input type="number" id="sample_size" name="sample_size" class="form-control" placeholder="Enter sample size" onchange="formatNumber(this)" required>
+                    </div>
+                <!-- <button id="submitBtn" class="submitb" type="submit" onclick="validate2(); return validate();">Submit</button> -->
+
+                <button type="submit" onclick="return validate()">Submit</button>
+                <!-- <button class="buttonload" style="display:none" onclick="return validate()" >
+                    <i class="fa fa-refresh fa-spin"></i>Loading
+                </button> -->
+            </form>
+        </div>
+    </body>
+</html>

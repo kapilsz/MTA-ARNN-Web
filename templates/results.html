@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Attribution Calculator - Results</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+		<script src="../static/home.js"></script>
+	</head>
+	
+	<body>
+		<nav>
+			<button {% if request.path == '/home' %}class="active"{% endif %} onclick="confirmNavigation()">Home</button>
+			<a href="/attr_table" {% if request.path == '/attr_table' %}class="active"{% endif %}>Attribution</a>
+			<a href="/bar_chart" {% if request.path == '/bar_chart' %}class="active"{% endif %}>Bar Chart</a>
+			<a href="/pie_chart" {% if request.path == '/pie_chart' %}class="active"{% endif %}>Pie Chart</a>
+			<a href="/heatmap" {% if request.path == '/heatmap' %}class="active"{% endif %}>Heatmap</a>
+			<a href="{{ url_for('download_file') }}" download="results.csv" style="float: right;">Export to Excel</a>
+		</nav>      
+		<h1>Attribution Calculator - {{medicine_type}}</h1>
+		<table>
+			<thead>
+				<tr>
+					<th>Channel</th>
+					<th>Score</th>
+					<th>Frequency</th>
+					<th>Cost</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for row in rows %}
+				<tr>
+					<td>{{ row[0] }}</td>
+					<td>{{ row[1] }}</td>
+					<td>{{ row[2] }}</td>
+					<td>{{ row[3] }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</body>
+</html>
+
+
