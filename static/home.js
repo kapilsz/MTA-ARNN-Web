@@ -1,8 +1,8 @@
 function confirmLogout() {
     if (confirm('Are you really want to LOGOUT?')) {
-    window.location.href = '/'; // Navigate to the Login page
+    window.location.href = '/logout'; // Navigate to the Logout page
+  }
 }
-}	  
 
 function validate() {
   const option1 = document.querySelectorAll('input[name="region"]:checked');
